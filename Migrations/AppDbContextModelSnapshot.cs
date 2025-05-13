@@ -22,6 +22,39 @@ namespace CakeStore.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CakeStore.Models.Auth.CakeReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CakeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CakeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CakeReviews");
+                });
+
             modelBuilder.Entity("CakeStore.Models.Cake", b =>
                 {
                     b.Property<int>("Id")
@@ -151,6 +184,25 @@ namespace CakeStore.Migrations
                         .IsUnique();
 
                     b.ToTable("UserProfiles");
+                });
+
+            modelBuilder.Entity("CakeStore.Models.Auth.CakeReview", b =>
+                {
+                    b.HasOne("CakeStore.Models.Cake", "Cake")
+                        .WithMany()
+                        .HasForeignKey("CakeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CakeStore.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cake");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CakeStore.Models.CakeProperty", b =>

@@ -8,23 +8,22 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ---- 1. Configure Services ----
 
-// Read JWT secret
+// JWT secret
 var jwtSecret = builder.Configuration["JwtSettings:Secret"];
 var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret!));
 
-// Add EF Core + PostgreSQL
+// EF Core + PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register TokenService
+// TokenService
 builder.Services.AddSingleton<TokenService>();
 
-// Add Controllers
+// Controllers
 builder.Services.AddControllers();
 
-// Add Authentication (JWT)
+// Authentication (JWT)
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -40,10 +39,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Add Authorization
+// Authorization
 builder.Services.AddAuthorization();
 
-// Add Swagger
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
