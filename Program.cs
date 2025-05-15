@@ -78,13 +78,12 @@ builder.Services.AddSwaggerGen(options =>
 // Kestrel binding to IPv4 port 80
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(80); // Binds to 0.0.0.0:80
+    serverOptions.ListenAnyIP(80); 
 });
 
 var app = builder.Build();
 
 
-// ---- 2. Configure Middleware ----
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
@@ -93,7 +92,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // 🔐 JWT Auth
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();
