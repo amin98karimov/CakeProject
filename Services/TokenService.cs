@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using CakeStore.Models; // Assuming User model is here
+using CakeStore.Models; 
 
 namespace CakeStore.Services
 {
