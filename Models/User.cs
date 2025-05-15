@@ -5,5 +5,5 @@ public class User
     public int Id { get; set; }
     public string Username { get; set; } = "";
     public string PasswordHash { get; set; } = "";
-    public string UserType { get; set; } = ""; // "Baker" or "Customer"
+    public string UserType { get; set; } = ""; 
 }
